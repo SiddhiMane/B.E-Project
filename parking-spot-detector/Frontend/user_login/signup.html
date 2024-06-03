@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Sign Up Form</title>
+</head>
+<body>
+    <div class="signup-container">
+        <form class="signup-form" id="signupForm">
+            <h2>Sign Up</h2>
+            <label for="new-username">New Username</label>
+            <input type="text" id="new-username" name="new-username" required>
+
+            <label for="new-password">New Password</label>
+            <input type="password" id="new-password" name="new-password" required>
+
+            <button type="button" onclick="showLocationOnMap()">Sign Up</button>
+            <p class="signin-link">Already have an account? <a href="login.html">Sign in here</a></p>
+        </form>
+    </div>
+
+    <script>
+
+        function showLocationOnMap(position) {
+            window.location.href = `../parking/parkings.html`;
+        }
+    </script>
+</body>
+</html>

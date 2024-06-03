@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        #map {
+            height: 50%;
+            width: 100%;
+        }
+    </style>
+    <title>User Location Map</title>
+</head>
+<body>
+    <h1>Map to Parking Spots</h1>
+    <h2>Follow the Map for the Parking</h2>
+    <div id="map"></div>
+    <br><br>
+    <button onclick="location.href='/parking/parkings.html'">Back</button>
+
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        function initMap() {
+            const mapElement = document.getElementById('map');
+
+            // Check if the browser supports geolocation
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+
+                        console.log('Geolocation success:', { latitude, longitude });
+
+                        // Create map object
+                        const map = L.map(mapElement).setView([latitude, longitude], 15);
+
+                        // Add OpenStreetMap tile layer
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        }).addTo(map);
+
+                        // Create a Marker at the user's location
+                        var marker = L.marker([latitude, longitude]).addTo(map)
+                            .bindPopup('Your Location')
+                            .openPopup();
+
+                        var loc = [
+                            parseFloat(urlParams.get("latitude")),
+                            parseFloat(urlParams.get("longitude"))
+                        ];
+
+                        var newMarker = L.marker(loc).addTo(map);
+                        L.Routing.control({
+                            waypoints: [
+                                L.latLng(latitude, longitude),
+                                L.latLng(loc[0], loc[1])
+                            ]
+                        })
+                        .on('routesfound', function (e) {
+                            var routes = e.routes;
+                        }).addTo(map);
+                    },
+                        //map.on('click', function (eve) {
+                        //    console.log([eve.latlng.lat, eve.latlng.lng]);
+                        //    var newMarker = L.marker([eve.latlng.lat, eve.latlng.lng]).addTo(map);
+                        //    L.Routing.control({
+                        //        waypoints: [
+                        //            L.latLng(latitude, longitude),
+                        //            L.latLng(eve.latlng.lat, eve.latlng.lng)
+                        //        ]
+                        //    }).on('routesfound', function (e) {
+                        //        console.log(e);
+                        //        var routes = e.routes;
+                        //        console.log(routes);
+                        //    }).addTo(map);
+                        //});
+                    (error) => {
+                        console.error('Error getting user location:', error.message);
+
+                        // Handle error, e.g., show a default location
+                        const defaultLocation = { lat: 0, lng: 0 };
+                        const map = L.map(mapElement).setView([defaultLocation.lat, defaultLocation.lng], 15);
+
+                        // Add OpenStreetMap tile layer
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        }).addTo(map);
+                    }
+                );
+            } else {
+                console.error('Geolocation is not supported by this browser.');
+
+                // Handle lack of geolocation support, e.g., show a default location
+                const defaultLocation = { lat: 0, lng: 0 };
+                const map = L.map(mapElement).setView([defaultLocation.lat, defaultLocation.lng], 15);
+
+                // Add OpenStreetMap tile layer
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+            }
+        }
+
+        // Initialize the map
+        initMap();
+
+        
+    </script>
+</body>
+</html>

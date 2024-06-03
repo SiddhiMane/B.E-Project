@@ -1,0 +1,94 @@
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f9f9f9; /* Changed background color */
+}
+
+.login-container {
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Increased shadow */
+    padding: 30px;
+    border-radius: 10px; /* Increased border radius */
+    overflow: hidden;
+    width: 400px;
+}
+
+form {
+    transition: transform 0.3s ease-in-out;
+}
+
+h2 {
+    font-size: 1.8em; /* Increased font size */
+    color: #333;
+    margin-bottom: 20px; /* Increased margin */
+    text-align: center; /* Centered the heading */
+}
+
+label {
+    display: block;
+    margin-bottom: 10px; /* Reduced margin */
+    color: #555;
+}
+
+input {
+    width: calc(100% - 20px); /* Adjusted input width */
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px; /* Increased border radius */
+    box-sizing: border-box;
+    transition: border-color 0.3s ease; /* Added transition */
+}
+
+input:focus {
+    border-color: #007bff; /* Highlight border color on focus */
+}
+
+button {
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Added transition */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.signup-link,
+.signin-link {
+    text-align: center;
+    margin-top: 15px; /* Increased margin */
+    font-size: 0.9em; /* Reduced font size */
+}
+
+.signup-link a,
+.signin-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.signup-link a:hover,
+.signin-link a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1px;
+}
+
+.remember-me input[type="checkbox"] {
+    margin-right: 300px;
+}
+
